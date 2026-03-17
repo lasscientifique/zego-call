@@ -3,10 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>Call</title>
-
-  <!-- SDK Zego -->
-  <script src="https://unpkg.com/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
-
+  <script src="https://unpkg.com/zego-uikit-prebuilt"></script>
   <style>
     body { margin:0; background:black; }
     #root { width:100vw; height:100vh; }
@@ -16,31 +13,34 @@
 <body>
   <div id="root"></div>
 
-  <script>
-    const params = new URLSearchParams(window.location.search);
+<script>
+const params = new URLSearchParams(window.location.search);
 
-    const userID = params.get("userID") || "user1";
-    const userName = userID;
-    const roomID = params.get("roomID") || "test_room";
-    const token = params.get("token") || "";
+const userID = params.get("userID");
+const userName = userID;
+const roomID = params.get("roomID");
+const token = params.get("token");
 
-    const appID = 116656247; // 🔴 remplace ici
+const appID = 116656247;
 
-    if (!token) {
-      document.body.innerHTML = "<h2 style='color:white'>Token manquant</h2>";
-    }
+const kitToken = ZegoUIKitPrebuilt.generateKitTokenForTest(
+  appID,
+  token,
+  roomID,
+  userID,
+  userName
+);
 
-    const zp = ZegoUIKitPrebuilt.create(token);
+const zp = ZegoUIKitPrebuilt.create(kitToken);
 
-    zp.joinRoom({
-      container: document.querySelector("#root"),
-      scenario: {
-        mode: ZegoUIKitPrebuilt.OneONoneCall,
-      },
-      turnOnMicrophoneWhenJoining: true,
-      turnOnCameraWhenJoining: false,
-      showPreJoinView: false,
-    });
-  </script>
+zp.joinRoom({
+  container: document.querySelector("#root"),
+  scenario: {
+    mode: ZegoUIKitPrebuilt.OneONoneCall,
+  },
+  turnOnMicrophoneWhenJoining: true,
+  turnOnCameraWhenJoining: false,
+});
+</script>
 </body>
 </html>
