@@ -3,7 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <title>Call</title>
-  <script src="https://unpkg.com/zego-uikit-prebuilt"></script>
+
+  <!-- SDK Zego -->
+  <script src="https://unpkg.com/zego-uikit-prebuilt/zego-uikit-prebuilt.js"></script>
+
   <style>
     body { margin:0; background:black; }
     #root { width:100vw; height:100vh; }
@@ -16,24 +19,27 @@
   <script>
     const params = new URLSearchParams(window.location.search);
 
-    const userID = params.get("userID");
+    const userID = params.get("userID") || "user1";
     const userName = userID;
-    const roomID = params.get("roomID");
-    const token = params.get("token");
+    const roomID = params.get("roomID") || "test_room";
+    const token = params.get("token") || "";
 
-    const appID = 116656247;
+    const appID = 116656247; // 🔴 remplace ici
+
+    if (!token) {
+      document.body.innerHTML = "<h2 style='color:white'>Token manquant</h2>";
+    }
 
     const zp = ZegoUIKitPrebuilt.create(token);
 
     zp.joinRoom({
       container: document.querySelector("#root"),
       scenario: {
-        mode: ZegoUIKitPrebuilt.OneONoneCall
+        mode: ZegoUIKitPrebuilt.OneONoneCall,
       },
-      showPreJoinView: false,
       turnOnMicrophoneWhenJoining: true,
       turnOnCameraWhenJoining: false,
-      showLeavingView: false,
+      showPreJoinView: false,
     });
   </script>
 </body>
