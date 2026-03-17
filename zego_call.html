@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Call</title>
+  <script src="https://unpkg.com/zego-uikit-prebuilt"></script>
+  <style>
+    body { margin:0; background:black; }
+    #root { width:100vw; height:100vh; }
+  </style>
+</head>
+
+<body>
+  <div id="root"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+
+    const userID = params.get("userID");
+    const userName = userID;
+    const roomID = params.get("roomID");
+    const token = params.get("token");
+
+    const appID = 116656247;
+
+    const zp = ZegoUIKitPrebuilt.create(token);
+
+    zp.joinRoom({
+      container: document.querySelector("#root"),
+      scenario: {
+        mode: ZegoUIKitPrebuilt.OneONoneCall
+      },
+      showPreJoinView: false,
+      turnOnMicrophoneWhenJoining: true,
+      turnOnCameraWhenJoining: false,
+      showLeavingView: false,
+    });
+  </script>
+</body>
+</html>
